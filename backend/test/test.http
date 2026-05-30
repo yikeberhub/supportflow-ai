@@ -1,0 +1,205 @@
+###############################################
+# SupportFlow AI - Complete Testing Suite
+###############################################
+
+@baseUrl = http://127.0.0.1:8000
+@contentType = application/json
+
+# JWT Token - Replace with your actual token from login
+@authToken = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc5OTgzNDc3LCJpYXQiOjE3Nzk5NjE4NzcsImp0aSI6ImEwNTIzNzY5MGM5OTRlYmFhY2ZmYjZiZDdiYTkzMzhmIiwidXNlcl9pZCI6IjQifQ.AspHpGLPyMssrn2QSbghEdfxxWfT9NNXJ-NTOP80Wu8
+###############################################
+# 1. AUTHENTICATION ENDPOINTS
+###############################################
+
+### Register New User
+POST {{baseUrl}}/api/accounts/register/
+Content-Type: {{contentType}}
+
+{
+    "username": "yikecyber",
+    "email": "yikecyber@gmail.com",
+    "password": "yike1234",
+    "role": "CUSTOMER"
+}
+
+### Login (Get JWT Token)
+POST {{baseUrl}}/api/accounts/login/
+Content-Type: {{contentType}}
+
+{
+    "username": "yikecyber",
+    "password": "yike1234"
+}
+
+### Get Current User Info
+GET http://127.0.0.1:8000/api/accounts/me/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc5ODQ3NzI2LCJpYXQiOjE3Nzk4MjYxMjYsImp0aSI6ImNjN2U2OTA0YjU5YTQ0MWY5ZTdjZWMwYzc1MWM0NTQ0IiwidXNlcl9pZCI6IjQifQ.2PLuwX16dbEWgdYZSo3B4AbfTOmvf5j2ONMbawTDRXE
+###############################################
+# 2. CUSTOMER MESSAGE ENDPOINTS
+###############################################
+
+### Create Customer Message (Triggers AI Analysis)
+
+POST http://127.0.0.1:8000/api/messages/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc5ODUyNTgxLCJpYXQiOjE3Nzk4MzA5ODEsImp0aSI6IjQwZWJiMDMxNDcwODQ1YTY5ODI3ZWYyMDE4M2VkZGVmIiwidXNlcl9pZCI6IjQifQ.n5kB7pHOwCpv5MPcY2T6K8zek6GveQUH7t56IQ1aWWY
+
+{
+  "content": "I was charged twice for my order and support is not replying. If this is not fixed today I will dispute the payment with my bank."
+}
+
+### Create Urgent Message (High Priority - Should Trigger Notification)
+POST http://127.0.0.1:8000/api/messages/
+Content-Type: {{contentType}}
+Authorization: Bearer {{authToken}}
+
+{
+    "content": "Your system is completely down! I cannot access my account and I'm losing money every minute!"
+}
+
+### List Customer Messages
+GET http://127.0.0.1:8000/api/messages/
+Authorization: Bearer {{authToken}}
+
+
+POST http://
+
+### Get Message Details
+GET http://127.0.0.1:8000/api/messages/5/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc5ODU1MTQzLCJpYXQiOjE3Nzk4MzM1NDMsImp0aSI6ImM1MzBiODY4N2NkNjQ3ZGRhZjIzMGZjYWE2Y2E5MGIzIiwidXNlcl9pZCI6IjMifQ.ZxOcBZYC9E8F3vfkRi7TCPMDtJg6cLHAViCQ1oYBiRE
+
+### Update Message Status
+GET http://127.0.0.1:8000/api/messages/4/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc5ODU1MTQzLCJpYXQiOjE3Nzk4MzM1NDMsImp0aSI6ImM1MzBiODY4N2NkNjQ3ZGRhZjIzMGZjYWE2Y2E5MGIzIiwidXNlcl9pZCI6IjMifQ.ZxOcBZYC9E8F3vfkRi7TCPMDtJg6cLHAViCQ1oYBiRE
+
+{
+    "status": "IN_PROGRESS"
+}
+
+PATCH http://127.0.0.1:8000/api/messages/1/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc5ODU1MTQzLCJpYXQiOjE3Nzk4MzM1NDMsImp0aSI6ImM1MzBiODY4N2NkNjQ3ZGRhZjIzMGZjYWE2Y2E5MGIzIiwidXNlcl9pZCI6IjMifQ.ZxOcBZYC9E8F3vfkRi7TCPMDtJg6cLHAViCQ1oYBiRE
+
+{
+    "status": "RESOLVED"
+}
+
+###############################################
+# 3. AI ANALYSIS ENDPOINTS
+###############################################
+
+### List All AI Analyses (Admin Only)
+GET http://127.0.0.1:8000/api/ai/analysis/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc5ODU1MTQzLCJpYXQiOjE3Nzk4MzM1NDMsImp0aSI6ImM1MzBiODY4N2NkNjQ3ZGRhZjIzMGZjYWE2Y2E5MGIzIiwidXNlcl9pZCI6IjMifQ.ZxOcBZYC9E8F3vfkRi7TCPMDtJg6cLHAViCQ1oYBiRE
+
+### Get Specific Analysis
+GET http://127.0.0.1:8000/api/ai/analysis/3
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc5ODU1MTQzLCJpYXQiOjE3Nzk4MzM1NDMsImp0aSI6ImM1MzBiODY4N2NkNjQ3ZGRhZjIzMGZjYWE2Y2E5MGIzIiwidXNlcl9pZCI6IjMifQ.ZxOcBZYC9E8F3vfkRi7TCPMDtJg6cLHAViCQ1oYBiRE
+
+
+### Get Analysis for a Message
+GET http://127.0.0.1:8000/api/ai/analysis/message/16
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc5ODU1MTQzLCJpYXQiOjE3Nzk4MzM1NDMsImp0aSI6ImM1MzBiODY4N2NkNjQ3ZGRhZjIzMGZjYWE2Y2E5MGIzIiwidXNlcl9pZCI6IjMifQ.ZxOcBZYC9E8F3vfkRi7TCPMDtJg6cLHAViCQ1oYBiRE
+
+
+###############################################
+# 4. NOTIFICATION SYSTEM - TESTING ENDPOINTS
+###############################################
+
+### Send Test Telegram Notification (To Current User)
+
+POST http://127.0.0.1:8000/api/notifications/logs/send_test_telegram/
+content-type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc5Mzc2OTE4LCJpYXQiOjE3NzkzNTUzMTgsImp0aSI6ImFkNjM0YTBhMDUwMTRkYjBiMDc5NWM3MmVlMThjZTAwIiwidXNlcl9pZCI6IjQifQ.x4UxHLJB56xCzMLZcZGFQc2qPaWeM7CxTPYa8h7JXkY
+
+
+{}
+
+### Send Test Email Notification (To Current User)
+POST http://127.0.0.1:8000/api/notifications/logs/send_test_email/
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc5Mzc2OTE4LCJpYXQiOjE3NzkzNTUzMTgsImp0aSI6ImFkNjM0YTBhMDUwMTRkYjBiMDc5NWM3MmVlMThjZTAwIiwidXNlcl9pZCI6IjQifQ.x4UxHLJB56xCzMLZcZGFQc2qPaWeM7CxTPYa8h7JXkY
+
+{}
+
+
+
+###############################################
+# 5. NOTIFICATION MANAGEMENT ENDPOINTS
+###############################################
+
+### List All Notifications (Users see only their own, Admins see all)
+GET http://127.0.0.1:8000/api/notifications/logs/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc5ODU1MTQzLCJpYXQiOjE3Nzk4MzM1NDMsImp0aSI6ImM1MzBiODY4N2NkNjQ3ZGRhZjIzMGZjYWE2Y2E5MGIzIiwidXNlcl9pZCI6IjMifQ.ZxOcBZYC9E8F3vfkRi7TCPMDtJg6cLHAViCQ1oYBiRE
+
+### Get Notification Details
+GET http://127.0.0.1:8000/api/notifications/logs/stats/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc5ODU1MTQzLCJpYXQiOjE3Nzk4MzM1NDMsImp0aSI6ImM1MzBiODY4N2NkNjQ3ZGRhZjIzMGZjYWE2Y2E5MGIzIiwidXNlcl9pZCI6IjMifQ.ZxOcBZYC9E8F3vfkRi7TCPMDtJg6cLHAViCQ1oYBiRE
+
+##3 get notification stats (total, sent, failed)
+
+GET http://127.0.0.1:8000/api/notifications/logs/stats/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc5MzgzMzAzLCJpYXQiOjE3NzkzNjE3MDMsImp0aSI6ImQ1NTg5OTYyMTA3NDRkZmU4ZTA3MzI1YThhNTc2NThjIiwidXNlcl9pZCI6IjMifQ.dd4C1C5CjlrzTLCJD6HsS7HwEgr4siCH23nC3ppsYvA
+###############################################
+# 6. ADMIN BROADCAST ENDPOINTS
+###############################################
+
+### Send Telegram to All Admins
+POST @baseUrl/api/notifications/logs/send_to_all_admins_telegram/
+Content-Type: @contentType
+Authorization: Bearer @token
+
+{
+    "title": "System Maintenance Alert",
+    "message": "The system will be under maintenance tonight from 11 PM to 1 AM. Please plan accordingly."
+}
+
+### Send Email to All Admins
+POST @baseUrl/api/notifications/logs/send_to_all_admins_email/
+Content-Type: @contentType
+Authorization: Bearer @token
+
+{
+    "title": "Daily Support Report",
+    "message": "Today's support metrics are ready for review. Please check the dashboard for details."
+}
+
+###############################################
+# 7. DAILY SUMMARY ENDPOINTS
+###############################################
+
+### Generate Daily Summary (Manual Trigger)
+POST @baseUrl/api/ai/summaries/generate/
+Content-Type: @contentType
+Authorization: Bearer @token
+
+{}
+
+### List All Daily Summaries
+
+POST {{baseUrl}}/api/ai/summaries/generate/
+Authorization: Bearer {{authToken}}
+
+#generate summaries 
+POST http://127.0.0.1:8000/api/ai/summaries/generate/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc5ODU1MTQzLCJpYXQiOjE3Nzk4MzM1NDMsImp0aSI6ImM1MzBiODY4N2NkNjQ3ZGRhZjIzMGZjYWE2Y2E5MGIzIiwidXNlcl9pZCI6IjMifQ.ZxOcBZYC9E8F3vfkRi7TCPMDtJg6cLHAViCQ1oYBiRE
+Content-Type: application/json
+
+### Get Latest Daily Summary
+GET http://127.0.0.1:8000/api/ai/summaries/latest/
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ0b2tlbl90eXBlIjoiYWNjZXNzIiwiZXhwIjoxNzc5ODU1MTQzLCJpYXQiOjE3Nzk4MzM1NDMsImp0aSI6ImM1MzBiODY4N2NkNjQ3ZGRhZjIzMGZjYWE2Y2E5MGIzIiwidXNlcl9pZCI6IjMifQ.ZxOcBZYC9E8F3vfkRi7TCPMDtJg6cLHAViCQ1oYBiRE
+
+###############################################
+# 8. USEFUL TEST SCENARIOS
+###############################################
+
+### Scenario 1: Full Workflow - Create Message (Auto Analysis + Notification)
+# Step 1: Create a message with urgent content
+POST @baseUrl/api/messages/
+Content-Type: @contentType
+Authorization: Bearer @token
+
+{
+    "content": "URGENT: The payment system is down and customers cannot checkout!"
+}

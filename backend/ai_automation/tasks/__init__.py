@@ -1,0 +1,1 @@
+from ai_automation.tasks.generate_daily_summary import generate_daily_summary
